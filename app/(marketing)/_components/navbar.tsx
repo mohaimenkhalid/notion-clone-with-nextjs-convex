@@ -22,7 +22,8 @@ const Navbar = () => {
 
         )}>
             <Logo />
-            <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
+            <div className="justify-end w-full flex items-center gap-x-2">
+                login
                 {/*{isLoading && (*/}
                 {/*    <Spinner />*/}
                 {/*)}*/}
