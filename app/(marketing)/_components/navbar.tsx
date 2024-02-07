@@ -10,6 +10,7 @@
 // import { Spinner } from "@/components/spinner";
 import { cn } from "@/lib/utils";
 import Logo from "@/app/(marketing)/_components/logo";
+import {ModeToggle} from "@/components/mode-toggle";
 
 const Navbar = () => {
     // const { isAuthenticated, isLoading } = useConvexAuth();
@@ -24,6 +25,7 @@ const Navbar = () => {
             <Logo />
             <div className="justify-end w-full flex items-center gap-x-2">
                 login
+                <ModeToggle />
                 {/*{isLoading && (*/}
                 {/*    <Spinner />*/}
                 {/*)}*/}
