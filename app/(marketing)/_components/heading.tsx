@@ -2,13 +2,13 @@ import React from 'react';
 import Link from "next/link";
 import {ArrowRight} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {SignInButton, UserButton} from "@clerk/clerk-react";
+import {SignInButton} from "@clerk/clerk-react";
 import {useConvexAuth} from "convex/react";
 import {Spinner} from "@/components/spinner";
 
 
 function Heading() {
-    const { isAuthenticated, isLoading } = useConvexAuth();
+    const {isAuthenticated, isLoading} = useConvexAuth();
     return (
         <div className="max-w-3xl space-y-4">
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
@@ -19,13 +19,16 @@ function Heading() {
                 better, faster work happens.
             </h3>
             {isLoading && (
-                <div className="w-full flex justify-center"><Spinner /></div>
+                <div className="w-full flex justify-center items-center">
+                    <Spinner size="lg"/>
+                </div>
             )}
             {!isAuthenticated && !isLoading && (
                 <>
                     <SignInButton mode="modal">
                         <Button size="sm">
                             Get Jotion free
+                            <ArrowRight/>
                         </Button>
                     </SignInButton>
                 </>
@@ -37,32 +40,8 @@ function Heading() {
                             Enter Jotion
                         </Link>
                     </Button>
-                    <UserButton
-                        afterSignOutUrl="/"
-                    />
                 </>
             )}
-            {/*{isLoading && (
-                <div className="w-full flex items-center justify-center">
-                    <Spinner size="lg" />
-                </div>
-            )}
-            {isAuthenticated && !isLoading && (
-                <Button asChild>
-                    <Link href="/documents">
-                        Enter Jotion
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                    </Link>
-                </Button>
-            )}
-            {!isAuthenticated && !isLoading && (
-                <SignInButton mode="modal">
-                    <Button>
-                        Get Jotion free
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                </SignInButton>
-            )}*/}
         </div>
     );
 }
