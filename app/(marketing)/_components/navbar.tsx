@@ -1,19 +1,20 @@
 "use client";
 
-// import { useConvexAuth } from "convex/react";
-// import { SignInButton, UserButton } from "@clerk/clerk-react";
-// import Link from "next/link";
+import { useConvexAuth } from "convex/react";
+import { SignInButton, UserButton } from "@clerk/clerk-react";
+import Link from "next/link";
 
  import { useScrollTop } from "@/hooks/use-scroll-top";
-// import { ModeToggle } from "@/components/mode-toggle";
-// import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 // import { Spinner } from "@/components/spinner";
+
 import { cn } from "@/lib/utils";
 import Logo from "@/app/(marketing)/_components/logo";
 import {ModeToggle} from "@/components/mode-toggle";
+import {Spinner} from "@/components/spinner";
 
 const Navbar = () => {
-    // const { isAuthenticated, isLoading } = useConvexAuth();
+     const { isAuthenticated, isLoading } = useConvexAuth();
     const scrolled = useScrollTop();
 
     return (
@@ -24,38 +25,36 @@ const Navbar = () => {
         )}>
             <Logo />
             <div className="justify-end w-full flex items-center gap-x-2">
-                login
+                {isLoading && (
+                    <Spinner />
+                )}
+                {!isAuthenticated && !isLoading && (
+                    <>
+                        <SignInButton mode="modal">
+                            <Button variant="ghost" size="sm">
+                                Log in
+                            </Button>
+                        </SignInButton>
+                        <SignInButton mode="modal">
+                            <Button size="sm">
+                                Get Jotion free
+                            </Button>
+                        </SignInButton>
+                    </>
+                )}
+                {isAuthenticated && !isLoading && (
+                    <>
+                        <Button variant="ghost" size="sm" asChild>
+                            <Link href="/documents">
+                                Enter Jotion
+                            </Link>
+                        </Button>
+                        <UserButton
+                            afterSignOutUrl="/"
+                        />
+                    </>
+                )}
                 <ModeToggle />
-                {/*{isLoading && (*/}
-                {/*    <Spinner />*/}
-                {/*)}*/}
-                {/*{!isAuthenticated && !isLoading && (*/}
-                {/*    <>*/}
-                {/*        <SignInButton mode="modal">*/}
-                {/*            <Button variant="ghost" size="sm">*/}
-                {/*                Log in*/}
-                {/*            </Button>*/}
-                {/*        </SignInButton>*/}
-                {/*        <SignInButton mode="modal">*/}
-                {/*            <Button size="sm">*/}
-                {/*                Get Jotion free*/}
-                {/*            </Button>*/}
-                {/*        </SignInButton>*/}
-                {/*    </>*/}
-                {/*)}*/}
-                {/*{isAuthenticated && !isLoading && (*/}
-                {/*    <>*/}
-                {/*        <Button variant="ghost" size="sm" asChild>*/}
-                {/*            <Link href="/documents">*/}
-                {/*                Enter Jotion*/}
-                {/*            </Link>*/}
-                {/*        </Button>*/}
-                {/*        <UserButton*/}
-                {/*            afterSignOutUrl="/"*/}
-                {/*        />*/}
-                {/*    </>*/}
-                {/*)}*/}
-                {/*<ModeToggle />*/}
             </div>
         </div>
     )
