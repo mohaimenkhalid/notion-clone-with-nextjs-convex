@@ -1,6 +1,6 @@
 "use client"
 
-import React, {ElementRef, useRef, useState} from 'react';
+import React, {ElementRef, useEffect, useRef, useState} from 'react';
 import {ChevronsLeft, MenuIcon} from "lucide-react";
 import {useMediaQuery} from 'usehooks-ts'
 import {usePathname} from "next/navigation";
@@ -56,10 +56,38 @@ function Navigation() {
             setTimeout(() => setIsResetting(false), 300)
         }
     }
+
+    const collapse = () => {
+        if(sidebarRef.current && navbarRef.current) {
+            setIsCollapsed(true)
+            setIsResetting(true)
+
+            sidebarRef.current.style.width = "0";
+            navbarRef.current.style.left = "0";
+            navbarRef.current.style.width = "100%";
+            setTimeout(() => setIsResetting(false), 300)
+        }
+    }
+
+    useEffect(() => {
+        if(isMobile) {
+            collapse()
+        } else {
+            resetWidth()
+        }
+    }, [isMobile])
+
+    useEffect(() => {
+        if(isMobile) {
+            collapse()
+        }
+    }, [pathname, isMobile])
+
     return (
         <>
             <aside
                 ref={sidebarRef}
+                onClick={collapse}
                 className={cn(
                     "group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[99999]",
                     isMobile && "w-0",
@@ -91,7 +119,7 @@ function Navigation() {
                  )}
             >
                 <nav className="bg-transparent px-3 py-2 w-full">
-                    {isMobile && <MenuIcon className="h-6 w-6"/>}
+                    {isCollapsed && <MenuIcon onClick={resetWidth} className="h-6 w-6"/>}
                 </nav>
             </div>
         </>
