@@ -1,13 +1,15 @@
 "use client"
 
 import React, {ElementRef, useEffect, useRef, useState} from 'react';
-import {ChevronsLeft, MenuIcon} from "lucide-react";
+import {ChevronsLeft, MenuIcon, PlusCircle} from "lucide-react";
 import {useMediaQuery} from 'usehooks-ts'
 import {usePathname} from "next/navigation";
 import {cn} from "@/lib/utils";
 import UserItem from "@/app/(main)/_components/user-item";
-import {useQuery} from "convex/react";
+import {useMutation, useQuery} from "convex/react";
 import {api} from "@/convex/_generated/api";
+import Item from "@/app/(main)/_components/item";
+import {toast} from "sonner";
 
 
 function Navigation() {
@@ -88,6 +90,17 @@ function Navigation() {
         }
     }, [pathname, isMobile])
 
+    const create = useMutation(api.documents.create)
+
+    const handleCreate = () => {
+        const promise = create({title: "untitled"})
+        toast.promise(promise, {
+            loading: "Creating a new note...",
+            success: "New note created!",
+            error: "Failed to create a new note."
+        })
+    }
+
     return (
         <>
             <aside
@@ -105,13 +118,17 @@ function Navigation() {
                 <div>
                 </div>
                 <UserItem/>
+                <Item
+                    onClick={handleCreate}
+                    label="New Page"
+                    icon={PlusCircle}
+                />
                 <div className="mt-4">
                     {
                         documents?.map((document) => (
                             <p key={document._id}>{document.title}</p>
                         ))
                     }
-                    <p>Documents</p>
                 </div>
                 <div
                     onMouseDown={handleMouseDown}
