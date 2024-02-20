@@ -1,7 +1,7 @@
 "use client"
 
 import React, {ElementRef, useEffect, useRef, useState} from 'react';
-import {ChevronsLeft, MenuIcon, PlusCircle} from "lucide-react";
+import {ChevronsLeft, MenuIcon, PlusCircle, Search, Settings} from "lucide-react";
 import {useMediaQuery} from 'usehooks-ts'
 import {usePathname} from "next/navigation";
 import {cn} from "@/lib/utils";
@@ -118,6 +118,17 @@ function Navigation() {
                 <div>
                 </div>
                 <UserItem/>
+                <Item
+                    onClick={handleCreate}
+                    label="Search"
+                    icon={Search}
+                    isSearch
+                />
+                <Item
+                    onClick={handleCreate}
+                    label="Settings"
+                    icon={Settings}
+                />
                 <Item
                     onClick={handleCreate}
                     label="New Page"
