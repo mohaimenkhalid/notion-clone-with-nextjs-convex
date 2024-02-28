@@ -6,17 +6,17 @@ import {useMediaQuery} from 'usehooks-ts'
 import {usePathname} from "next/navigation";
 import {cn} from "@/lib/utils";
 import UserItem from "@/app/(main)/_components/user-item";
-import {useMutation, useQuery} from "convex/react";
+import {useMutation} from "convex/react";
 import {api} from "@/convex/_generated/api";
 import Item from "@/app/(main)/_components/item";
 import {toast} from "sonner";
+import {DocumentList} from "@/app/(main)/_components/document-list";
 
 
 function Navigation() {
     const pathname = usePathname();
     const isMobile = useMediaQuery('(max-width: 768px)');
     // @ts-ignore
-    const documents = useQuery(api.documents.getSidebar)
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null);
@@ -135,11 +135,9 @@ function Navigation() {
                     icon={PlusCircle}
                 />
                 <div className="mt-4">
-                    {
-                        documents?.map((document) => (
-                            <p key={document._id}>{document.title}</p>
-                        ))
-                    }
+
+                    <DocumentList />
+
                 </div>
                 <div
                     onMouseDown={handleMouseDown}
