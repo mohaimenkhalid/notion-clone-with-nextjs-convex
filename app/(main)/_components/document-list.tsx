@@ -52,8 +52,8 @@ export const DocumentList = ({
             </>
         )
     }
-    // console.log(parentDocumentId)
-    // console.log(documents)
+    console.log(parentDocumentId)
+    console.log(documents)
     return (
         <>
          <p
