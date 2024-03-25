@@ -11,11 +11,12 @@ import {api} from "@/convex/_generated/api";
 import Item from "@/app/(main)/_components/item";
 import {toast} from "sonner";
 import {DocumentList} from "@/app/(main)/_components/document-list";
-
+import { useSearch } from "@/hooks/use-search";
 
 function Navigation() {
     const pathname = usePathname();
     const isMobile = useMediaQuery('(max-width: 768px)');
+    const search = useSearch()
     // @ts-ignore
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -119,7 +120,7 @@ function Navigation() {
                 </div>
                 <UserItem/>
                 <Item
-                    onClick={handleCreate}
+                    onClick={search.onOpen}
                     label="Search"
                     icon={Search}
                     isSearch
